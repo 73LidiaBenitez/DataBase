@@ -1,0 +1,148 @@
+
+Challenge Amazon RDS
+--------------------
+
+copiar la ip publica del server.
+
+Entrar consola a RDS
+
+Crear base de datos
+
+dejar en creacion standar
+
+Escojer MySQL te da la version 8.0
+
+--Plantillas poner desarrollo y pruebas
+
+Disponibilidad y duarabilidad poner instancia de DB unica
+
+Cofiguracion--- en identificador dejarle asi database1
+
+Nombre de usuario maestro dejarlo asi --admin
+
+--contraseña maestra felino1234
+
+Configuracion de la instancia escoger la de clase T
+
+En almacenamiento escoger gp2 en 20 
+
+Conectividad escoger la VPC --quitar el escalado automatico
+
+Acceso publico NO
+
+Grupos de seguridad el de web security group.
+
+Zona de disponibilidad poner us west 2a
+
+En Configuracion Adicional poner nombre ChallengerDBinicial
+
+Quitar copias de seguridad y cifrado-- mantenimiento
+
+Crear bases de Datos, darle.
+
+Ir a VPC ir a GS ir al security group editar la regla de entrada.
+
+Ir a RDS abrir la base de datos, y copiar el Punto de enlace.
+
+Abrir Putty-----------
+
+sudo dnf install mariadb105
+
+$sudo yum install mysql    enter
+ Darle y    yes enter
+
+$mysql --version
+
+en el siguinte paso se pega el punto de enlace del punto de enlace. En los parentesis.
+
+$mysql -h (database1.cyfjksdklfmmf.us-west-2rds)  -P 3306 -u admin -p         --enter
+
+$password felino1234
+
+MySQL>> SHOW DATABASES;
+
+Muestra la tabla Challenge
+
+>>use challenge
+
+y te sale changedd
+
+MySQL>> CREATE TABLE Challenge.restart (student_id INT NOT NULL PRIMARY KEY, student_name VARCHAR(100) NULL, restart_city VARCHAR(45), graduation_date DATETIME NULL);
+
+- Para ver los campos con que se creo se ingresa el siguiente comando
+
+
+-------------------------------------------------
+MySQL (Challenge)>
+
+INSERT INTO Challenge.restart (student_id, student_name, restart_city, graduation_date) VALUES 
+(1, "Miguel Angel", "Boyaca", NOW()),
+(2,"luis felipe", "Bogota", NOW()),
+(3,"Yeison Boada", "Popayan", NOW()),
+(4,"Yudi angelica", "Cartagena", NOW()), 
+(5, "Cristian Villa", "Medellin", NOW()),
+(6, "Nelson Reyes", "Barranquilla", NOW()),
+(7,"Alex Prada", "Medellin", NOW()),
+(8, "Marco Acosta", "Bogota", NOW()),
+(9,"Hamilton Escudero", "Bogota", NOW()),
+(10, "Erika Ortuno", "Bogota", NOW());
+
+------------------------------------------------------------------------------------------------------------------------
+>>CREATE TABLE Challenge.cloud_practitioner(student_id INT, certification_date datetime);
+
+>>INSERT INTO Challenge.cloud_practitioner (student_id, certification_date)
+VALUES (1,"2023/05/05"),
+(2,"2023/05/06"),
+(3,"2023/05/07"),
+(4,"2023/05/08"),
+(5,"2023/05/09");
+
+------------------------------------------------------------------------------------------------------------------------
+para mostrar la tabla es:
+
+>SELECT * FROM Challenge.restart;
+
+y se muestra la tabla--------------------
+
+>SELECT * FROM Challenge.cloud_practitioner;
+
+-----------------------------------------------------------
+
+faltaria unir las dos tablas con el innerjoin.
+
+SELECT r.student_id, r.student_name, p.certification_date
+FROM restart as r INNER JOIN cloud_practitioner as p
+ON r.student_id = p.student_id;
+
+FIN FIN 
+
+(Sin usar INNerJOIN)
+SELECT r.student_id, r.student_name, p.certification_date
+FROM restart as r, cloud_practitioner as p
+WHERE r.student_id = p.student_id;
+------------------------------------------------------------------------------------------------------------------------
+DESCRIBE restart
+
+- Para agregar registros
+
+INSERT INTO restart VALUES (1,'Felipe Pérez', 'Bogotá', '2021/04/23');
+INSERT INTO restart VALUES (2,'Claudia Montaña', 'Bogotá', '2021/04/23');
+INSERT INTO restart VALUES (4,'Guillermo López', 'Bogotá', '2021/04/23');
+
+- Para ver los registros creados 
+
+SELECT * FROM restart
+
+- Creamos otra tabla 
+
+CREATE TABLE cloud_practitioner (studentID INT NOT NULL PRIMARY KEY, certificationDate DATE);
+
+- Agregamos registros
+
+INSERT INTO cloud_practitioner VALUES (1, '2021/04/25');
+INSERT INTO cloud_practitioner VALUES (2, '2021/04/25');
+
+
+- Para ver los registros creados 
+
+SELECT * FROM cloud_practitioner
